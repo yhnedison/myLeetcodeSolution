@@ -10,12 +10,12 @@ public class Solution {
 		
 		for(int flower: flowers) { 
 			n++;
-			uf.add(flower); // suppose flowers 0 - N-1
+			uf.add(flower - 1); // transfer 0~N to N~N-1
 			
 			check : {
 				if (uf.getNumGroup() == m) { // only check when numGroup == m
 					for (int i: flowers) {
-						if (uf.getSize(i) >= 1 && uf.getSize(uf.find(i)) < k) {
+						if (uf.getSize(i-1) >= 1 && uf.getSize(uf.find(i-1)) < k) {
 							System.out.println("Check failed for flower " + flower);
 							break check;
 						}
@@ -31,7 +31,7 @@ public class Solution {
     }
 	
 	public static void main(String[] args) {
-		int[] input = new int[] {2,1,0,4,5,3};
+		int[] input = new int[] {3,2,1,5,6,4};
 		
 		Solution sol = new Solution();
 		int result = sol.kEmptySlots(input, 2, 2);
