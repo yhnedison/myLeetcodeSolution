@@ -10,10 +10,10 @@ public class Solution {
 		
 		for(int flower: flowers) { 
 			n++;
-			uf.add(flower); // map 1 - N to 0 - N-1, so we can use index directly
+			uf.add(flower); // suppose flowers 0 - N-1
 			
-			if (uf.numGroup == m) { // only check when numGroup == m
-				for (int size: uf.size) {
+			if (uf.getNumGroup() == m) { // only check when numGroup == m
+				for (int size: uf.getSize()) {
 					if (size < k) break;
 				}
 				result = n;
@@ -33,10 +33,10 @@ public class Solution {
 }
 
 class UnionFind {
-	int[] parents; // int[x] = y, flower at position x have parent y
-	int[] size;	
-	int numGroup;
-	int N;
+	private int[] parents; // int[x] = y, flower at position x have parent y
+	private int[] size;	
+	private int numGroup;
+	private int N;
 	
 	public UnionFind(int n) {
 		parents = new int[n];
@@ -46,6 +46,14 @@ class UnionFind {
 			parents[i] = i;
 			size[i] = 0;
 		}
+	}
+	
+	public int getNumGroup() {
+		return numGroup;
+	}
+	
+	public int[] getSize() {
+		return size;
 	}
 	
 	public void add(int p) {
@@ -75,7 +83,7 @@ class UnionFind {
 		}
 	}
 	
-	public int find(int p) { // path compression
+	private int find(int p) { // path compression
 		while (p != parents[p]) {
 			parents[p] = parents[parents[p]];
 			p = parents[p];
@@ -83,11 +91,8 @@ class UnionFind {
 		return p;
 	}
 	
-	public boolean connected(int p, int q) {
-		return find(p) == find(q);
-	}
-	
-	public void union(int p, int q) {
+
+	private void union(int p, int q) {
 		int rootp = find(p);
 		int rootq = find(q);
 		if (rootp == rootq) return;
