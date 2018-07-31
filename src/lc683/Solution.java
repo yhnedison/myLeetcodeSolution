@@ -14,13 +14,14 @@ public class Solution {
 			
 			check : {
 				if (uf.getNumGroup() == m) { // only check when numGroup == m
+					System.out.println("Numgroup = " + m +  " So check");
 					for (int i: flowers) {
 						if (uf.getSize(i-1) >= 1 && uf.getSize(uf.find(i-1)) < k) {
-							System.out.println("Check failed for flower " + flower);
+							System.out.println("Check failed for flower " + (flower-1));
 							break check;
 						}
 					}
-					System.out.println("Check passed for flower " + flower);
+					System.out.println("Check passed for flower " + (flower-1));
 					result = n;
 					System.out.println("Result = " + result);
 				}
@@ -42,7 +43,7 @@ public class Solution {
 
 class UnionFind {
 	private int[] parents; // int[x] = y, flower at position x have parent y
-	private int[] size;	// also use size to indicate added or not
+	private int[] size;	// also use size to indicate added or not(size == 0)
 	private int numGroup;
 	private int N;
 	
@@ -51,8 +52,8 @@ class UnionFind {
 		size = new int[n];
 		N = n;
 		for (int i = 0; i < n; i++) {
-			parents[i] = i;
-			size[i] = 0;
+			parents[i] = i; // pointing to self
+			size[i] = 0; // 0 indicates not added
 		}
 	}
 	
@@ -67,7 +68,7 @@ class UnionFind {
 	public void add(int p) {
 		validate(p);
 		size[p] = 1;
-		if (p == 0 || p == N-1) { // add edge case single flower
+		if (p == 0 || p == N-1) { // single flower, edge case
 			if ((p == 0 && size[p+1] == 0) || (p == N-1 && size[p-1] == 0)) {
 				numGroup++;
 				parents[p] = p;
