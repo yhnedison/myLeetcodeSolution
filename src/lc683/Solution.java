@@ -15,7 +15,7 @@ public class Solution {
 			check : {
 				if (uf.getNumGroup() == m) { // only check when numGroup == m
 					for (int i: flowers) {
-						if (uf.getSize(uf.find(i)) < k) {
+						if (uf.getSize(i) >= 1 && uf.getSize(uf.find(i)) < k) {
 							System.out.println("Check failed for flower " + flower);
 							break check;
 						}
