@@ -13,8 +13,8 @@ public class Solution {
 			uf.add(flower); // suppose flowers 0 - N-1
 			
 			if (uf.getNumGroup() == m) { // only check when numGroup == m
-				for (int size: uf.getSize()) {
-					if (size < k) break;
+				for (int i: flowers) {
+					if (uf.getSize(uf.find(i)) < k) break;
 				}
 				result = n;
 			}
@@ -34,7 +34,7 @@ public class Solution {
 
 class UnionFind {
 	private int[] parents; // int[x] = y, flower at position x have parent y
-	private int[] size;	
+	private int[] size;	// also use size to indicate added or not
 	private int numGroup;
 	private int N;
 	
@@ -52,45 +52,43 @@ class UnionFind {
 		return numGroup;
 	}
 	
-	public int[] getSize() {
-		return size;
+	public int getSize(int p) {
+		return size[p];
 	}
 	
 	public void add(int p) {
 		validate(p);
+		size[p] = 1;
 		if (p == 0 || p == N-1) { // add edge case single flower
-			if ((p == 0 && parents[p+1] == -1) || (p == N-1 && parents[p-1] == -1)) {
+			if ((p == 0 && size[p+1] == 0) || (p == N-1 && size[p-1] == 0)) {
 				numGroup++;
 				parents[p] = p;
-				size[p] = 1;
-			} else if (p == 0 && parents[p+1] != -1) {
+			} else if (p == 0 && size[p+1] != 0) {
 				union(p, p+1);
-			} else if (p == N-1 && parents[p-1] != -1) {
+			} else if (p == N-1 && size[p-1] != 0) {
 				union(p, p-1);
 			}
-		} else if (parents[p-1] == -1 && parents[p+1] == -1 ) { // add single flower
+		} else if (size[p-1] == 0 && size[p+1] == 0 ) { // add single flower
 			numGroup++;
 			parents[p] = p;
-			size[p] = 1;
-		} else if (parents[p-1] != -1 && parents[p+1] != -1) { // join two existing group
+		} else if (size[p-1] != 0 && size[p+1] != 0) { // join two existing group
 			union(p, p-1);
 			union(p, p+1);
 			numGroup--;
-		} else if (parents[p-1] != -1) { // join left
+		} else if (size[p-1] != 0) { // join left
 			union(p, p-1);
-		} else if (parents[p+1] != -1) { // join right
+		} else if (size[p+1] != 0) { // join right
 			union(p, p+1);
 		}
 	}
 	
-	private int find(int p) { // path compression
+	public int find(int p) { // with path compression
 		while (p != parents[p]) {
 			parents[p] = parents[parents[p]];
 			p = parents[p];
 		}
 		return p;
 	}
-	
 
 	private void union(int p, int q) {
 		int rootp = find(p);
@@ -101,10 +99,12 @@ class UnionFind {
 		// update root size
 		if (size[rootp] < size[rootq]) {
 			parents[rootp] = rootq;
-			size[rootq] += size[rootq];
+			size[rootq] += size[rootp];
+			size[rootp] = size[rootq]; // update size of both root
 		} else {
 			parents[rootq] = rootp;
 			size[rootp] += size[rootq];
+			size[rootq] = size[rootp]; // update size of both
 		}
 	}
 	
