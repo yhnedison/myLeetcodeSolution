@@ -12,12 +12,20 @@ public class Solution {
 			n++;
 			uf.add(flower); // suppose flowers 0 - N-1
 			
-			if (uf.getNumGroup() == m) { // only check when numGroup == m
-				for (int i: flowers) {
-					if (uf.getSize(uf.find(i)) < k) break;
+			check : {
+				if (uf.getNumGroup() == m) { // only check when numGroup == m
+					for (int i: flowers) {
+						if (uf.getSize(uf.find(i)) < k) {
+							System.out.println("Check failed for flower " + flower);
+							break check;
+						}
+					}
+					System.out.println("Check passed for flower " + flower);
+					result = n;
+					System.out.println("Result = " + result);
 				}
-				result = n;
 			}
+			
 		}
 		return result == 0 ? -1 : result;
     }
@@ -80,9 +88,13 @@ class UnionFind {
 		} else if (size[p+1] != 0) { // join right
 			union(p, p+1);
 		}
+		
+		System.out.println("Adding flower " + p);
+		System.out.println(java.util.Arrays.toString(parents));
+		System.out.println(java.util.Arrays.toString(size));
 	}
 	
-	public int find(int p) { // with path compression
+	public int find(int p) { // with path compression, find root of p
 		while (p != parents[p]) {
 			parents[p] = parents[parents[p]];
 			p = parents[p];
@@ -100,11 +112,11 @@ class UnionFind {
 		if (size[rootp] < size[rootq]) {
 			parents[rootp] = rootq;
 			size[rootq] += size[rootp];
-			size[rootp] = size[rootq]; // update size of both root
+//			size[rootp] = size[rootq]; // update size of both root
 		} else {
 			parents[rootq] = rootp;
 			size[rootp] += size[rootq];
-			size[rootq] = size[rootp]; // update size of both
+//			size[rootq] = size[rootp]; // update size of both
 		}
 	}
 	
