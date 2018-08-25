@@ -7,11 +7,11 @@ public class Solution {
 		UnionFind uf = new UnionFind(flowers.length);
 		int n = 0;
 		int result = 0;
-		
-		for(int flower: flowers) { 
+
+		for(int flower: flowers) {
 			n++;
-			uf.add(flower - 1); // transfer 0~N to N~N-1
-			
+			uf.add(flower - 1); // transfer 1~N to 0~N-1
+
 			check : {
 				if (uf.getNumGroup() == m) { // only check when numGroup == m
 					System.out.println("Numgroup = " + m +  " So check");
@@ -26,17 +26,17 @@ public class Solution {
 					System.out.println("Result = " + result);
 				}
 			}
-			
+
 		}
 		return result == 0 ? -1 : result;
     }
-	
+
 	public static void main(String[] args) {
 		int[] input = new int[] {3,2,1,5,6,4};
-		
+
 		Solution sol = new Solution();
 		int result = sol.kEmptySlots(input, 2, 2);
-		
+
 		System.out.println(result);
 	}
 }
@@ -46,7 +46,7 @@ class UnionFind {
 	private int[] size;	// also use size to indicate added or not(size == 0)
 	private int numGroup;
 	private int N;
-	
+
 	public UnionFind(int n) {
 		parents = new int[n];
 		size = new int[n];
@@ -56,15 +56,15 @@ class UnionFind {
 			size[i] = 0; // 0 indicates not added
 		}
 	}
-	
+
 	public int getNumGroup() {
 		return numGroup;
 	}
-	
+
 	public int getSize(int p) {
 		return size[p];
 	}
-	
+
 	public void add(int p) {
 		validate(p);
 		size[p] = 1;
@@ -89,12 +89,12 @@ class UnionFind {
 		} else if (size[p+1] != 0) { // join right
 			union(p, p+1);
 		}
-		
+
 		System.out.println("Adding flower " + p);
 		System.out.println(java.util.Arrays.toString(parents));
 		System.out.println(java.util.Arrays.toString(size));
 	}
-	
+
 	public int find(int p) { // with path compression, find root of p
 		while (p != parents[p]) {
 			parents[p] = parents[parents[p]];
@@ -107,7 +107,7 @@ class UnionFind {
 		int rootp = find(p);
 		int rootq = find(q);
 		if (rootp == rootq) return;
-		
+
 		// join root with smaller size to root with larger size
 		// update root size
 		if (size[rootp] < size[rootq]) {
@@ -120,11 +120,10 @@ class UnionFind {
 //			size[rootq] = size[rootp]; // update size of both
 		}
 	}
-	
+
 	private void validate(int p) {
         if (p < 0 || p >= N) {
-            throw new IllegalArgumentException("index " + p + " is not between 0 and " + (N-1));  
+            throw new IllegalArgumentException("index " + p + " is not between 0 and " + (N-1));
         }
     }
 }
-
