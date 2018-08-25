@@ -14,16 +14,12 @@ public class Solution {
 
 			check : {
 				if (uf.getNumGroup() == m) { // only check when numGroup == m
-					System.out.println("Numgroup = " + m +  " So check");
 					for (int i: flowers) {
 						if (uf.getSize(i-1) >= 1 && uf.getSize(uf.find(i-1)) < k) {
-							System.out.println("Check failed for flower " + (flower-1));
 							break check;
 						}
 					}
-					System.out.println("Check passed for flower " + (flower-1));
 					result = n;
-					System.out.println("Result = " + result);
 				}
 			}
 
@@ -36,8 +32,6 @@ public class Solution {
 
 		Solution sol = new Solution();
 		int result = sol.kEmptySlots(input, 2, 2);
-
-		System.out.println(result);
 	}
 }
 
@@ -89,10 +83,6 @@ class UnionFind {
 		} else if (size[p+1] != 0) { // join right
 			union(p, p+1);
 		}
-
-		System.out.println("Adding flower " + p);
-		System.out.println(java.util.Arrays.toString(parents));
-		System.out.println(java.util.Arrays.toString(size));
 	}
 
 	public int find(int p) { // with path compression, find root of p
