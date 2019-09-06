@@ -30,11 +30,11 @@ class Solution2 {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode curr = root;
         while (curr != null || !stack.empty()) {
-            while (curr != null) {
+            while (curr != null) { // this block keep push left node to stack
                 stack.push(curr);
                 curr = curr.left;
             }
-            curr = stack.pop();
+            curr = stack.pop(); // pop left-most node
             result.add(curr.val);
             curr = curr.right;
         }
