@@ -22,6 +22,24 @@ class Solution {
     }
 }
 
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode curr = root;
+        while(!stack.isEmpty() || curr != null) {
+            if(curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            } else {
+                curr = stack.pop();
+                result.add(curr.val);  // Add after all left children
+                curr = curr.right;   
+            }
+        }
+        return result;
+    }
+}
 
 class Solution2 {
     public List<Integer> inorderTraversal(TreeNode root) {

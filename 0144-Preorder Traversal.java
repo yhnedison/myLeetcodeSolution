@@ -26,6 +26,45 @@ class Solution {
 
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
+        // iterative, one loop
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        while (curr != null || !stack.empty()) {
+            if (curr != null) { // keep push left to null, while adding val to result
+                result.add(curr.val);
+                stack.push(curr);
+                curr = curr.left;
+            } else {
+                curr = stack.pop();
+                curr = curr.right;
+            }
+        }
+        return result;
+    }
+}
+
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        // iterative, different loop
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        while (curr != null || !stack.empty()) {
+            while (curr != null) { // keep push left to null, while adding val to result
+                result.add(curr.val);
+                stack.push(curr);
+                curr = curr.left;
+            }
+            curr = stack.pop();
+            curr = curr.right;
+        }
+        return result;
+    }
+}
+
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
         // iterative using stack
         List<Integer> result = new ArrayList<>();
         Stack<TreeNode> stack = new Stack<>();
@@ -38,25 +77,6 @@ class Solution {
                 stack.push(curr.right); // FILO, push right first to pop left first
                 stack.push(curr.left);
             }
-        }
-        return result;
-    }
-}
-
-
-class Solution {
-    public List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode curr = root;
-        while (curr != null || !stack.empty()) {
-            while (curr != null) { // keep push left to null, while adding val to result
-                result.add(curr.val);
-                stack.push(curr);
-                curr = curr.left;
-            }
-            curr = stack.pop();
-            curr = curr.right;
         }
         return result;
     }
