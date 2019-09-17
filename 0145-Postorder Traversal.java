@@ -42,7 +42,7 @@ class Solution {
         List<Integer> result = new ArrayList<Integer>();
         Stack<TreeNode> stack = new Stack<TreeNode>();
         TreeNode curr = root;
-        while (!stack.isEmpty() || curr != null) {
+        while ( curr != null || !stack.isEmpty()) {
             // find leaf nodes
             while (curr != null) {
                 stack.push(curr);
