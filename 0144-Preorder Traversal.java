@@ -9,12 +9,11 @@
  */
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
-        // recursive
+        //Recursive
         List<Integer> result = new ArrayList<>();
         traversal(root, result);
         return result;
     }
-
     private void traversal(TreeNode root, List<Integer> result) {
         if (root == null) return;
         result.add(root.val);

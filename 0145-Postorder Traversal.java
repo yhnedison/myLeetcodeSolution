@@ -11,29 +11,55 @@ class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result=new ArrayList<>()
         Stack<TreeNode> stack=new Stack<>();
-        TreeNode node=root;
-        while(node!=null || !stack.isEmpty()){
-            if(node!=null){
-                stack.push(node);
-                if(node.left!=null){
-                    node=node.left;
+        TreeNode curr=root;
+        while(curr!=null || !stack.isEmpty()){
+            if(curr!=null){
+                stack.push(curr);
+                if(curr.left!=null){
+                    curr=curr.left;
                 }
                 else{
-                    node=node.right;
+                    curr=curr.right;
                 }
             }
             else{
-                node=stack.pop();
-                result.add(node.val);
-                if(!stack.isEmpty() && stack.peek().left==node){
-                    node=stack.peek().right;
+                curr=stack.pop();
+                result.add(curr.val);
+                if(!stack.isEmpty() && stack.peek().left==curr){
+                    curr=stack.peek().right;
                 }
                 else{
-                    node=null;
+                    curr=null;
                 }
             }
         }
         return result;
     }
+}
+
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<Integer>();
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode curr = root;
+        while (!stack.isEmpty() || curr != null) {
+            // find leaf nodes
+            while (curr != null) {
+                stack.push(curr);
+                if (curr.left != null) {
+                    curr = curr.left;
+                } else {
+                    curr = curr.right;
+                }
+            }
+            TreeNode curr = stack.pop();
+            result.add(curr.val);
+            if (!stack.isEmpty() && stack.peek().left == curr) {
+                curr = stack.peek().right;
+            }
+        }
+        return result;
+    }
+    
 }
 
