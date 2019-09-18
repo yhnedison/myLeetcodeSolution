@@ -22,6 +22,26 @@ class Solution {
     }
 }
 
+// Easy to Understand
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        // iterative using stack 
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = null;
+        stack.push(root);
+        while(!stack.isEmpty()) {
+            curr = stack.pop();
+            if (curr != null) {
+                result.add(curr.val);
+                stack.push(curr.right); // FILO, push right first to pop left first
+                stack.push(curr.left);
+            }
+        }
+        return result;
+    }
+}
+
 
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
@@ -62,21 +82,4 @@ class Solution {
     }
 }
 
-class Solution {
-    public List<Integer> preorderTraversal(TreeNode root) {
-        // iterative using stack
-        List<Integer> result = new ArrayList<>();
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode curr = null;
-        stack.push(root);
-        while(!stack.isEmpty()) {
-            curr = stack.pop();
-            if (curr != null) {
-                result.add(curr.val);
-                stack.push(curr.right); // FILO, push right first to pop left first
-                stack.push(curr.left);
-            }
-        }
-        return result;
-    }
-}
+

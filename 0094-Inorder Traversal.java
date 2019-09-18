@@ -43,7 +43,7 @@ class Solution {
     }
 }
 
-class Solution2 {
+class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         // iterative dfs using stack
         List<Integer> result = new ArrayList<>();
