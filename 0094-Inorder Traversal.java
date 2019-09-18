@@ -25,6 +25,26 @@ class Solution {
 
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
+        // iterative dfs using stack
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+        while (curr != null || !stack.empty()) {
+            while (curr != null) { // this block keep push left node to stack
+                stack.push(curr);
+                curr = curr.left;
+            }
+            curr = stack.pop(); // pop left-most node
+            result.add(curr.val); // do the operation, either printing or adding to list
+            curr = curr.right;
+        }
+        return result;
+    }
+}
+
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
         // iterative, one loop
         List<Integer> result = new ArrayList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
@@ -43,21 +63,3 @@ class Solution {
     }
 }
 
-class Solution {
-    public List<Integer> inorderTraversal(TreeNode root) {
-        // iterative dfs using stack
-        List<Integer> result = new ArrayList<>();
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode curr = root;
-        while (curr != null || !stack.empty()) {
-            while (curr != null) { // this block keep push left node to stack
-                stack.push(curr);
-                curr = curr.left;
-            }
-            curr = stack.pop(); // pop left-most node
-            result.add(curr.val);
-            curr = curr.right;
-        }
-        return result;
-    }
-}
