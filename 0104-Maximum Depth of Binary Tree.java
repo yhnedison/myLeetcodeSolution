@@ -10,17 +10,19 @@
 
 
  // 100%, 94%
- // Recursive, Trivial
+ // Recursive
 class Solution {
     public int maxDepth(TreeNode root) {
-        if (root == null) 
-            return 0;
+        if (root == null)  return 0;
 
-        return java.lang.Math.max(maxDepth(root.left) + 1, maxDepth(root.right) + 1);
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return Math.max(left, right) + 1;
     }
 }
 
-// BFS 11% 93%
+// BFS Level Order Traversal
+// 11% 93%
 class Solution {
     public int maxDepth(TreeNode root) {
         int max = 0;
@@ -40,7 +42,8 @@ class Solution {
     }
 }
 
-// DFS 11% 93%
+// DFS 
+// 11% 93%
 class Solution {
     public int maxDepth(TreeNode root) {
         int max = 0;

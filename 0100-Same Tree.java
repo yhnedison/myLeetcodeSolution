@@ -24,3 +24,14 @@ class Solution {
         return stack1.size() == stack2.size();   
     }
 }
+
+// recursive
+// O(n) O(1) 100% 100%
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) return true; // End case, both null, also handle case with two empty tree
+        if (p == null || q == null) return false; // End case, Unequal nullity
+        if (p.val != q.val) return false; // Both not null, but unequal value
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+}
