@@ -1,12 +1,35 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+/// Reverse of Inorder Traversal Recursive 99% 37%
+class Solution {
+    private int sum = 0;
+    public TreeNode convertBST(TreeNode root) {
+        if (root == null) return null;
+        convertBST(root.right);
+        root.val += sum;
+        sum = root.val;
+        convertBST(root.left);
+        return root;
+    }
+}
+
+// Reverse of Inorder Traversal 14% 37%
+class Solution {
+    public TreeNode convertBST(TreeNode root) {
+        TreeNode curr = root;
+        Stack<TreeNode> stack = new Stack<>();
+        int sum = 0;
+        while (curr != null || !stack.isEmpty()) {
+            while (curr != null) {
+                stack.push(curr);
+                curr = curr.right;
+            }
+            curr = stack.pop();
+            sum += curr.val;
+            curr.val = sum;
+            curr = curr.left;
+        }
+        return root;
+    }
+}
 
  //Two Pass, 6% 6%
 class Solution {
