@@ -18,3 +18,4 @@ bin/
 .classpath
 .project
 .settings/
+.vscode/launch.json
